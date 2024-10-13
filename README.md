@@ -18,68 +18,72 @@ All devices must be connected to the same network(wi-fi or ad-hoc)
 * RS232/422/485 serial standarts can be selected
 * MODBUS communication is not supported yet.
 
-The following installation instructions apply to the mobile app - Sowify. More information about the mobile app an its usage can be found in a [separate section](https://github.com/bacataBorisov/Sowify_RPi/blob/master/README.md)
+The following installation instructions apply to the mobile app - Sowify. 
+
+More information about the Raspberry Pi setup an its usage can be found in a [separate section](https://github.com/bacataBorisov/Sowify_RPi/blob/master/README.md)
 
 ## Installation
 
-The following installation instructions are valid for a fresh out of the box RPi. If you already have a device set-up and you are an advanced user you can ommit some of the steps.
+The app is still in development phase, and needs more testing, that's why it has not been released in the app store.
+An Apple developer account is needed in order to install and test / use the app.
+You will be able to use it for 7 days with free account and 1 year, or no-longer than you subscription expiration date, if you have paid developer subscription.
 
-1. Get a RPi and install Raspberry Pi OS - [How to install a Raspberry Pi OS?](https://www.raspberrypi.com/documentation/computers/getting-started.html#install-an-operating-system)
-2. Install MOXA uPort 1150 Linux Drivers - the following kernels are supported by MOXA -> Kernel 6.x, 5.x, 4.x, 3.x, 2.6.x, and 2.4.x
-  - [Download Drivers](https://cdn-cms.azureedge.net/getmedia/c7a1d4ee-ff6f-46fe-b707-e6e2c6fcc152/moxa-uport-1100-series-linux-kernel-6.x-driver-v6.0.tgz)
-  - [Instructions for drivers installation](https://moxa.com/getmedia/a2924269-6076-4c8f-9c1e-7268e235dde1/moxa-uport-1100-series-manual-v9.0.pdf)
-  - install **setserial** - `sudo apt-get install -y setserial`
-  - install **pip3** - `sudo apt install python3-pip`
-  - install **pyserial** - `sudo pip3 install pyserial`
-3. Install and setup the Mosquitto MQTT Server on the RPi. There are different ways how to do that depending on your choice and the RPi operating system.
-[I used this guide and I find it pretty well explained](https://forums.raspberrypi.com/viewtopic.php?t=196010)
+1. Clone the repository in Xcode.
+2. Build and run the app on a simulator or a real device.
 
 ## Usage
 
-### **NB!** Check the configuration file of the MQTT server before starting it.
+Once you have the app installed and RPi device set you can start reading serial data.
 
-In order to make the server for public use you have to specify listener.
-The following two lines of code need to be added to a custom configuration file: /etc/mosquitto/**filename**.conf, where
-“filename” is the name of the file given by you:
+*Operator panel*
 
-```
-#specify listener and port
-listener 1883
-#auth method
-allow_anonymous true
-```
 
-If you want to set additional authentication method, you can check the documents here:
-https://mosquitto.org/documentation/authentication-methods/
+<img width="400" alt="Screenshot 2024-10-13 at 9 56 58" src="https://github.com/user-attachments/assets/0ddd1e38-0d95-44da-bba4-5d9223da0708">
 
-Start the server using the new configuration:
-`sudo mosquito -v -c filename.conf`
+- Tap "IOIOI" button to select the serial interface type and mode
+- Tap "Play / Pause" button to start the communication - you should be able to see the serial data. 
+If everything is normal and connection has been established, the status bar shows the current configuration.
 
-- Download and save the mediator.py and sowify_client.py on the RPi (typically your home directory)
-- make them executable `chmod +x sowify_client.py && chmod +x mediator.py`
-- Start both scripts - `./sowify_client && ./mediator.py &`
+*Status Bar*
 
-With those steps completed you can now go to the [Sowify-iOS App Section](https://github.com/bacataBorisov/Sowify-iOS-App) and follow the instructions how to use the app and start seeing some serial data (make sure you have the uPort 1150 plugged in and a serial data source, otherwise you will get the relevant warning messages in the app)
 
-### **TIP:** You can have your scripts running on start-up using some of the following methods [described in this link](https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/)
+<img width="400" alt="status_bar" src="https://github.com/user-attachments/assets/00c7c804-dae5-4fdf-b179-4c2736b4a39e">
 
-The "mediator.py" is solely responsible for rebooting and shutting down the RPi if anything goes wrong with the "sowify_client.py" or if you just want to reboot / power off your device remotely.
+The app will update its status bar on top with the relevant warning message in case there are any. 
 
-### **NOTE:** If you want to use the logging function, logs folder needs to be created individually by modifying the following line in the sowify_client.py
-logging.basicConfig(filename=f"**your-log-dir-name-goes-here**/{log_timestamp}.log"
+<img width="400" alt="warning_message" src="https://github.com/user-attachments/assets/6a1abb05-d067-4a3d-90ca-f0601224cf9c">
+
+- Tap "x" button to clear the screen
+- The last two buttons are used to reboot or power off the Raspberry Pi. 
+If you have your scripts configured to run on start-up, once the RPi has boot it will connect automatically to the app. 
+Otherwise, you may need to start MQTT server, sowify_clien.py and mediator.py manually
+
+### TIP: To add the scripts to run on start-up you can refer to that [article](https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/)
+
+*Reading Serial Data (example of reading NMEA data from a GILL Windsonic wind sensor)*
+
+<img width="400" alt="serial_data" src="https://github.com/user-attachments/assets/eaef1f76-b3b3-4c91-8b0c-fb2da812e22a">
+
+*Send Write Command Terminal*
+
+<img width="400" alt="terminal" src="https://github.com/user-attachments/assets/f731ad33-8fb4-4e16-be12-ad0c0752e085">
+
+- terminal provides the option to send write command to the sensor or serial device attached to the RPi. 
+Refer to its own datasheet and familiarize yourself with available commands (device dependable).
 
 ## **License**
 
-Project Title is released under the MIT License. See the **[LICENSE](https://github.com/bacataBorisov/Sowify_RPi/blob/master/LICENSE.txt)** file for details.
+Sowify is released under the MIT License. See the **[LICENSE](https://github.com/bacataBorisov/Sowify/blob/main/LICENSE)** file for details.
 
 ## **Authors and Acknowledgment**
 
 Sowify was created by **[Vasil Borisov](https://github.com/bacataBorisov)**.
 
 Following resources have been used while developing project
-- [PySerial](https://pypi.org/project/pyserial/)
-- [MQTT](https://mqtt.org)
-- [setserial](https://github.com/Distrotech/setserial)
+- [CocoaMQTT](https://cocoapods.org/pods/CocoaMQTT)
+- [IQKeyboardManagerSwift](https://cocoapods.org/pods/IQKeyboardManagerSwift)
+- [SwftTooltipKit](https://github.com/hendesi/SwiftTooltipKit)
+- Various articles from StackOverflow, Github and others
 
 ## **Changelog**
 
