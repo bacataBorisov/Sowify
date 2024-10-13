@@ -42,7 +42,7 @@ class SerialConfiguration: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.parityStopBytesizePickerData.selectRow(SerialDataSettings.ser_configuration_return[2], inComponent: 0, animated: true)
         self.parityStopBytesizePickerData.selectRow(SerialDataSettings.ser_configuration_return[3], inComponent: 1, animated: true)
         self.parityStopBytesizePickerData.selectRow(SerialDataSettings.ser_configuration_return[4], inComponent: 2, animated: true)
-        // select rows after they have been set to default - if nothing has been touche get the default values
+        //select rows after they have been set to default - if nothing has been touched get the default values
         pickerView(typeAndSpeedPicker, didSelectRow: 0, inComponent: 0)
         pickerView(parityStopBytesizePickerData, didSelectRow: 0, inComponent: 0)
         

@@ -24,9 +24,7 @@ class ViewController: UIViewController {
     
     //MARK: - Declaring Variables & Constants
     
-    //get identifier - if you want to be more specific you need to MAP that in a separate
-    //function. For the moment I will just use it to get the identifier and if I need
-    //to find out what it is -> go to internet
+    //get identifier
     private static var identifier: String = {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -64,18 +62,17 @@ class ViewController: UIViewController {
         } else {
             cmdTextField.setLeftView(image: UIImage(systemName: "terminal.fill")!)
         }
-        //shaping and coloring main window
+        //MARK: - Shapes and Colors for the Main Window
         displayNMEA.layer.cornerRadius = 8
         displayNMEA.layer.masksToBounds = true
         displayNMEA.backgroundColor = UIColor(named: "display")
         displayNMEA.isScrollEnabled = true
         displayNMEA.font = .systemFont(ofSize: 16, weight: .semibold)
+        
         //status bar
         configurationInfo.layer.cornerRadius = 8
         configurationInfo.layer.masksToBounds = true
-        
-        //think of a better name for the app and present it in better way
-        configurationInfo.text = "Serial Over Wi-Fy"
+        configurationInfo.text = "Sowify"
         configurationInfo.font = .systemFont(ofSize: 24, weight: .semibold)
         
         //cmd field attributes
@@ -153,7 +150,7 @@ class ViewController: UIViewController {
         //Print statement used during development / debugging
         //print("app is terminating")
         
-        //Close the connection befor the app exits
+        //Close the connection before the app exits
         mqttClient.disconnect()
     }
     
@@ -195,7 +192,7 @@ class ViewController: UIViewController {
     func stopBlink(_: UIButton) {
         
     }
-    //change attributes when dark and light modes are switched
+    //change attributes when dark and light modes are toggled
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         
         if self.traitCollection.userInterfaceStyle == .dark {
@@ -224,7 +221,7 @@ class ViewController: UIViewController {
             // hold / resume screen
             if sender.isSelected == false {
                 if mqttClient.connState == .connected {
-                    //you only need to subscribe once - and probably in a different place to these topics
+                    
                     mqttClient.subscribe(topic_warning)
                     mqttClient.subscribe(topic_feedback)
                     mqttClient.subscribe(topic)
@@ -232,7 +229,8 @@ class ViewController: UIViewController {
                     mqttClient.publish(ser_conf_topic, withString: "\(SerialDataSettings.ser_configuration[0]),\(SerialDataSettings.ser_configuration[1]),\(SerialDataSettings.ser_configuration[2]),\(SerialDataSettings.ser_configuration[3]),\(SerialDataSettings.ser_configuration[4])")
                     
                     sender.isSelected = true
-                    //buttons borders - it gives cerftain weight to the play button - I like it
+                    
+                    //Buttons border
                     playButtonAppearance.layer.borderWidth = 1.5
                     playButtonAppearance.layer.cornerRadius = 6
                     playButtonAppearance.layer.borderColor = UIColor(named: "running")?.cgColor
@@ -272,13 +270,13 @@ class ViewController: UIViewController {
         playButtonAppearance.isSelected = false
         mqttClient.unsubscribe(topic)
         
-        // implement prepare for segue - without sending any values
+        //implement prepare for segue - without sending any values
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "serial_configuration", sender: nil)
         }
     }
     
-    //MARK: Functions Go Here
+    //MARK: - Functions Go Here
     
     //Prepare for Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -289,7 +287,7 @@ class ViewController: UIViewController {
     }
 }//END OF VIEW CONTROLLER
 
-//MARK: Extensions Start Here!!!
+//MARK: Extensions Start Here
 
 //MARK: TextField Icon on the Left
 extension UITextField {
@@ -300,7 +298,6 @@ extension UITextField {
         iconContainerView.addSubview(iconView)
         leftView = iconContainerView
         leftViewMode = .always
-        //need to play with the colors
         self.tintColor = .lightGray
     }
 }
@@ -322,20 +319,6 @@ extension ViewController: UITextFieldDelegate {
         return true
     }
 }
-
-////MARK: - Flashing Status Bar
-//extension UIView {
-//    func blink(duration: TimeInterval = 0.5, delay: TimeInterval = 0.0, alpha: CGFloat = 1.0) {
-//        UIView.animate(withDuration: duration, delay: delay, options: [.curveEaseInOut, .repeat, .autoreverse, .allowUserInteraction], animations: {
-//            self.alpha = 0
-//        })
-//    }
-//
-//    func stopBlink() {
-//        layer.removeAllAnimations()
-//        alpha = 1
-//    }
-//}
 
 //MARK: - Vibration & Sound
 extension UIDevice {
@@ -409,7 +392,7 @@ extension ViewController: CocoaMQTTDelegate {
                 updateScreen(display: displayNMEA, message: messageDecodedSafe)
             }
         } else {
-            updateScreen(display: displayNMEA, message: "could not decode message")
+            updateScreen(display: displayNMEA, message: "Could not decode message!")
         }
         
     }

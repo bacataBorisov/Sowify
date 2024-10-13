@@ -12,19 +12,17 @@ struct SerialDataSettings {
     //raw configuration is used just for check if the settings have changed
     static var ser_configuration_raw: [String] = ["", "", "", "", ""]
     //this array is used for sending the last settings used to the pickers in SerialConfiguration controller. Once it is loaded it will show you the last used settings
-    // default settings for the pickers
-    // {RS-232, 9600, None, 1, 8} - change if you want something else
+    
+    // default settings for the pickers -> {RS-232, 9600, None, 1, 8}
     static var ser_configuration_return: [Int] = [0, 1, 0, 0, 3]
+    
     //this one is used for sending the settings in the RPi format
     //initialize default settings
     static var ser_configuration: [String] = ["", "", "", "", ""]
-    //used to check if settings were choose initially
+    //check if settings were choose initially
     static var flag: Bool = false
     static var update_flag: Bool = false
     
-    //if you want to access the variable you need to make the function static
-    //READ MORE AB OUT IT and RECAP ABOUT CLASSES
-    // I am not sure exactly what I am doing :))
     static func updateConfiguration() {
         
         ser_configuration = ser_configuration_raw
@@ -47,7 +45,7 @@ struct SerialDataSettings {
         }
         
         //BAUDRATE is being send as a string number and can be used straight forward
-        // I se only the return array which is going to be used for keeping the last settings
+        //I see only the return array which is going to be used for keeping the last settings
         switch ser_configuration[1] {
         case "4800":
             ser_configuration_return[1] = 0
