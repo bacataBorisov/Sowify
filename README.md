@@ -91,6 +91,6 @@ Following resources have been used while developing project
 
 ## **Contact**
 
-If you have any questions or comments about Sowify, please contact **[bacata.borisov](vasil.borisovv@gmail.com)**.
+If you have any questions or comments about Sowify, please contact **[bacata.borisov](https://github.com/bacataBorisov)**.
 
 
