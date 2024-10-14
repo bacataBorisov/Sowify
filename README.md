@@ -2,21 +2,25 @@
 
 ## Project description
 
-The purpose of this project is to facilitate the troubleshooting while working with serial signals - such as reading data from sensors. 
-It eliminates the need for carrying various equipment and setting up cables in spaces with difficult access. 
-The project consists of two separate parts:
-1. A Raspberry Pi (aka RPi) with a MOXA uPort1150 serial-to-USB adapter - used to send the data over the network.
-2. iOS mobile app that will receive the data and visualise it.
- 
-_(RPi Model 3B+ was used in this project but any other RPi with USB Type A port should do the job)_
+This project aims to facilitate troubleshooting by eliminating the need for additional equipment and complex setups. It consists of two main components:
 
-The RPi will be battery powered, serial signal will be read and sent over the wi-fi to an iOS device that has the Sowify app installed on it (iPhone, iPad).
-All devices must be connected to the same network(wi-fi or ad-hoc)
+1. Raspberry Pi (RPi):
 
-* Read / Write commands from / to the equipment are supported.
-* The preferred interface can be selected from the Sowify mobile app and that will change the configuration of the uPort
-* RS232/422/485 serial standarts can be selected
-* MODBUS communication is not supported yet.
+- Equipped with a MOXA uPort1150 for serial communication.
+- Can use any RPi model having USB Type A (Model 3B+ used in this project).
+- Battery-powered with serial signal conversion.
+
+2. iOS Mobile App:
+
+- Receives serial data sent by the RPi over Wi-Fi using an MQTT server.
+- Devices must be on the same network (Wi-Fi or Ethernet).
+
+### Features:
+
+- Read/Write commands to/from equipment.
+- Select preferred interface via Sowify app.
+- Support for RS232/422/485 serial standards.
+- MODBUS communication support (not yet implemented).
 
 The following installation instructions apply to the mobile app - Sowify. 
 
@@ -24,16 +28,14 @@ More information about the Raspberry Pi setup an its usage can be found in a [se
 
 ## Installation
 
-The app is still in development phase, and needs more testing, that's why it has not been released in the app store.
-An Apple developer account is needed in order to install and test / use the app.
-You will be able to use it for 7 days with free account and 1 year, or no-longer than you subscription expiration date, if you have paid developer subscription.
-
 1. Clone the repository in Xcode.
 2. Build and run the app on a simulator or a real device.
 
+### Note: The app is still in development and requires an Apple developer account. It can be used for 7 days with a free account or for 1 year with a paid developer subscription.
+
 ## Usage
 
-Once you have the app installed and RPi device set you can start reading serial data.
+Once all devices are connected to the same network, the app will automatically connect and display data.
 
 *Operator panel*
 
@@ -53,8 +55,8 @@ The app will update its status bar on top with the relevant warning message in c
 
 <img width="400" alt="warning_message" src="https://github.com/user-attachments/assets/6a1abb05-d067-4a3d-90ca-f0601224cf9c">
 
-- Tap "x" button to clear the screen
-- The last two buttons are used to reboot or power off the Raspberry Pi. 
+- "x" button clears the screen
+- Last two buttons reboot or power off the Raspberry Pi. 
 If you have your scripts configured to run on start-up, once the RPi has boot it will connect automatically to the app. 
 Otherwise, you may need to start MQTT server, sowify_clien.py and mediator.py manually
 
@@ -87,10 +89,11 @@ Following resources have been used while developing project
 
 ## **Changelog**
 
-- **0.1.0:** Initial release
+- **1.0.0:** Initial release
 
 ## **Contact**
 
 If you have any questions or comments about Sowify, please contact **[bacata.borisov](https://github.com/bacataBorisov)**.
+Open to suggestions for improvement, new features, or collaborations.
 
 
